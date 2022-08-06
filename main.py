@@ -13,14 +13,16 @@
 # 12. what is a total cumulative clories burn for a person
 
 import SQL_Connection
-import SQL_Operations
-import Pandas_Operations
+import SQL_Operations as sc
+import Pandas_Operations as po
 
 fitbit_flag_operations = True
 while fitbit_flag_operations:
     choice = int(input("\n1.My SQL \n2.Pandas\n3\n"))
     if choice == 1:
         SQL_Connection.mysql_db_operations()
+    if choice == 2:
+        po.pandas_db_operations()
     else:
         print("have a good day")
         fitbit_flag_operations = False
