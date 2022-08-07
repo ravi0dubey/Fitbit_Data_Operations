@@ -18,10 +18,10 @@ import pandas as pd
 import csv
 import csvkit
 
-def mysql_db_operations():
+def mysql_db_connection():
 
-    sql_flag = True
-    while sql_flag:
+    sql_conn_flag = True
+    while sql_conn_flag:
         choice1 = int(input("\nSQL Operataions\n1.Able to connect to MYSQL \n2.Create script of table Fitbit \n3.Create a table fitbit in MYSQL\n4. Do a bulk load fitbit dataset in MYSQL\n\nEnter Your Choice :"))
         if choice1   == 1:
             connect_db()
@@ -33,7 +33,7 @@ def mysql_db_operations():
             load_mysql_table()
         else:
             print("Return to Main Operations")
-            sql_flag = False
+            sql_conn_flag = False
 
 
 def connect_db():
@@ -43,6 +43,7 @@ def connect_db():
         cursor = mydb.cursor()  # create a cursor to execute queries
         cursor.execute(show_query)
         print("able to connect to MYSQL DATABASE")
+        return(mydb)
     except Exception as e:
             mydb.close()
             return (str(e))

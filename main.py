@@ -12,16 +12,18 @@
 # 11. 5th most laziest person in the dataset
 # 12. what is a total cumulative clories burn for a person
 
-import SQL_Connection
-import SQL_Operations as sc
+import SQL_Connection as sc
+import SQL_Operations as so
 import Pandas_Operations as po
 
 fitbit_flag_operations = True
 while fitbit_flag_operations:
-    choice = int(input("\n1.My SQL \n2.Pandas\n\nEnter Your Choice: "))
+    choice = int(input("\n1.My SQL Data Load \n2.SQL Data_Operations\n3.Pandas\n\nEnter Your Choice: "))
     if choice == 1:
-        SQL_Connection.mysql_db_operations()
-    if choice == 2:
+        sc.mysql_db_connection()
+    elif choice == 2:
+        so.sql_db_operations()
+    elif choice == 3:
         po.pandas_db_operations()
     else:
         print("have a good day")
