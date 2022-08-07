@@ -47,7 +47,7 @@ def pandas_db_operations():
         elif choice1 == 12:
             calories_burn_per_Id()
         else:
-            print("Return to Main Operations")
+            print("Return to Main Operations menu")
             pandas_flag = False
 
 

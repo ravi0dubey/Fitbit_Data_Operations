@@ -40,6 +40,7 @@ def connect_db():
     try:
         mydb = connection.connect(host="localhost",database= "projectdb", user="devuser", passwd="Logitech1234#", use_pure=True)
         show_query = "SHOW DATABASES"
+        print("we are in connect_db")
         cursor = mydb.cursor()  # create a cursor to execute queries
         cursor.execute(show_query)
         print("able to connect to MYSQL DATABASE")

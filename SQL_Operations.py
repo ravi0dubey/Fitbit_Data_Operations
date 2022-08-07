@@ -27,8 +27,8 @@ def sql_db_operations():
             "\n\nEnter Your Choice :"))
         if choice2 == 1:
             db_date_time()
-        # elif  choice2 == 1:
-        #     db_date_time()
+        elif  choice2 == 2:
+            db_date_time()
         else:
             print("Return to Main Operations")
             sql_oper_flag = False
@@ -53,6 +53,9 @@ def db_date_time():
             print(f"Error in Converting Date Time format : {e}")
 
 
+def print_unique_id_sql():
+    mydb1 = db_connect()
+    cursor1 = mydb1.cursor()
 
 
 # 6. How many of them have not logged there activity, find out their ids
