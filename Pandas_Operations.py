@@ -11,6 +11,7 @@
 # 10. Third most active person in dataset, find out using pandas and sql
 # 11. 5th most laziest person in the dataset
 # 12. what is a total cumulative clories burn for a person
+# 13. Explore over an internet that how much calories burn is required for a healthy person and find out how many healthy person we have in our dataset
 
 import pandas as pd
 import csv
@@ -20,8 +21,9 @@ def pandas_db_operations():
     pandas_flag = True
     while pandas_flag:
         choice1 = int(input("\nPandas Operataions\n1.Read Fitbit Dataset \n2.Convert Activity date into timestamp format \n3.Print Unique Activity ID\n4.Active ID's dataset"
-                            "\n5.ID's where Activity not logged\n6.Laziest Person in the dataset\n8.How Many have skipped Activity \n9: Third Most Active Person in dataset"
-                            "\n10. Nth most laziest person in the dataset\n11.What is a total cumulative clories burn for a person\n\nEnter Your Choice :"))
+                            "\n5.ID's where Activity not logged\n7.Laziest Person in the dataset\n8.Calories Burn required and based on it how many of them are Healthiest in dataset"
+                            "\n9.How Many have skipped Activity\n10: Third Most Active Person in dataset\n11. Nth most laziest person in the dataset\n12.What is a total cumulative clories burn for a person"
+                            "\n\nEnter Your Choice :"))
         if choice1 == 1:
             pandas_print_dataset()
         elif choice1 == 2:
@@ -32,15 +34,17 @@ def pandas_db_operations():
             active_id()
         elif choice1 == 5:
             activity_not_logged()
-        elif choice1 == 6:
+        elif choice1 == 7:
             lazy_id()
         elif choice1 == 8:
-            not_active_regularly_id()
+            calories_burn_active_id()
         elif choice1 == 9:
-            third_active_regularly_id()
+            not_active_regularly_id()
         elif choice1 == 10:
-            fifth_laziest_id()
+            third_active_regularly_id()
         elif choice1 == 11:
+            fifth_laziest_id()
+        elif choice1 == 12:
             calories_burn_per_Id()
         else:
             print("Return to Main Operations")
@@ -88,6 +92,15 @@ def lazy_id():
     b = df1.groupby(['Id'])[['TotalSteps', 'TotalDistance', 'SedentaryMinutes']].agg(['sum'])
     print(b.sort_values(by=[('TotalSteps', 'sum'), ('TotalDistance', 'sum')], ascending=True).head(1))
 
+
+
+def calories_burn_active_id():
+    df1 = pandas_read_csv()
+    healthy_df1 = df1.groupby('Id')['Calories'].agg(['sum', 'mean'],2).sort_values(by=['mean'], ascending=False)
+    carlories_to_burn= int(input("How many Calories should be burnt on Average: "))
+    print(f"Healthy Dataset in descending Order where Calories burned is greater than {carlories_to_burn}\n")
+    print(healthy_df1[healthy_df1['mean'] > carlories_to_burn])
+    print(f"Count of Healthy Id's:\n {healthy_df1[healthy_df1['mean'] > carlories_to_burn].count()}")
 
 def count_skipped_days(steps_val):
     # skipped_val= int(input("Enter How many days skipped data you want : "))
