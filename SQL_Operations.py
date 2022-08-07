@@ -23,7 +23,7 @@ def sql_db_operations():
         choice2 = int(input(
             "\nSQL Db Operataions\n1.Convert Activity date into timestamp format \n2.Print Unique Activity ID\n3.Active ID's dataset"
             "\n4.ID's where Activity not logged\n5.Laziest Person in the dataset\n6.Calories Burn required and based on it how many of them are Healthiest in dataset"
-            "\n7.How Many have skipped Activity\n8: Third Most Active Person in dataset\n9. Nth most laziest person in the dataset\0.What is a total cumulative clories burn for a person"
+            "\n7.How Many have skipped Activity\n8: Third Most Active Person in dataset\n9. Nth most laziest person in the dataset\10.What is a total cumulative clories burn for a person"
             "\n\nEnter Your Choice :"))
         if choice2 == 1:
             db_date_time()
@@ -31,6 +31,22 @@ def sql_db_operations():
             db_print_unique_id_sql()
         elif  choice2 == 3:
             db_active_id_sql()
+        elif choice2 == 4:
+            db_activity_not_logged_sql()
+        elif choice2 == 5:
+            db_laziest_sql()
+        elif choice2 == 6:
+            db_fit_accordingto_calories_burn_sql()
+        elif choice2== 7:
+            db_not_active_regularly_sql()
+        elif choice2== 8:
+            db_third_most_activey_sql()
+            db_third_most_activey_sql_alternate()
+        elif choice2== 9:
+            db_fifth_most_laziest_sql()
+        elif choice2== 10:
+            db_cumulative_calories_burn_sql()
+
         else:
             print("Return to Main Operations")
             sql_oper_flag = False
@@ -85,6 +101,14 @@ def db_laziest_sql():
     cursor1.execute(lazies_id_query)
     print(f"Fitbit Laziest Id data  using cursor\n {cursor1.fetchall()}")
 
+# 8. Search on internet how much calories are burn is required for a healthy person and find out how many person we have in our data
+def db_fit_accordingto_calories_burn_sql():
+    mydb1 = db_connect()
+    cursor1 = mydb1.cursor()
+    average_calorie_burn_query = " SELECT id, avg(Calories) FROM fitbit_data group by ID  having avg(Calories) > 2200 order by sum(Calories);"
+    cursor1.execute(average_calorie_burn_query)
+    print(f"Fitbit 5th Most Laziest data  using cursor\n {cursor1.fetchall()}")
+
 # 9. How many are not active regularly
 def db_not_active_regularly_sql():
     mydb1 = db_connect()
@@ -108,13 +132,27 @@ def db_third_most_activey_sql():
 
 # 10. Third most active person in dataset, find out using pandas and sql
 def db_third_most_activey_sql_alternate():
+    print("\nAlternate option for 3rd most activeId\n")
     mydb1 = db_connect()
     cursor1 = mydb1.cursor()
-    create_view_query ="create view sum_total_steps as SELECT id, sum(TotalSteps) as total_steps_sum FROM fitbit_data group by ID order by sum(TotalSteps) desc;"
-    cursor1.execute(create_view_query)
+    # create_view_query ="create view if not exists sum_total_steps as SELECT id, sum(TotalSteps) as total_steps_sum FROM fitbit_data group by ID order by sum(TotalSteps) desc;"
+    # cursor1.execute(create_view_query)
     third_most_active_query_1= "SELECT id, total_steps_sum FROM sum_total_steps AS sum1   WHERE 3-1 = (SELECT COUNT(DISTINCT total_steps_sum) FROM sum_total_steps AS sum2  WHERE sum2.total_steps_sum > sum1.total_steps_sum);  "
     cursor1.execute(third_most_active_query_1)
     print(f"Fitbit 3rd Most Active Regularly Id data  using cursor\n {cursor1.fetchall()}")
 
 # 11. 5th most laziest person in the dataset
+def db_fifth_most_laziest_sql():
+    mydb1 = db_connect()
+    cursor1 = mydb1.cursor()
+    fifth_most_laziest_query = " SELECT id, sum(TotalSteps),sum(TotalDistance) FROM fitbit_data group by ID order by sum(TotalSteps), sum(TotalDistance) limit 4,1 ;"
+    cursor1.execute(fifth_most_laziest_query)
+    print(f"Fitbit 5th Most Laziest data  using cursor\n {cursor1.fetchall()}")
+
 # 12. what is a total cumulative clories burn for a person
+def db_cumulative_calories_burn_sql():
+    mydb1 = db_connect()
+    cursor1 = mydb1.cursor()
+    cumulative_calorie_burn_query = "SELECT id, sum(Calories) FROM fitbit_data group by ID order by sum(Calories);"
+    cursor1.execute(cumulative_calorie_burn_query)
+    print(f"Fitbit 5th Most Laziest data  using cursor\n {cursor1.fetchall()}")
