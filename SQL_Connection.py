@@ -22,7 +22,7 @@ def mysql_db_operations():
 
     sql_flag = True
     while sql_flag:
-        choice1 = int(input("\nSQL Operataions\n1.Able to connect to MYSQL \n2.Create script of table Fitbit \n3.Create a table fitbit in MYSQL\n4. Do a bulk load fitbit dataset in MYSQL"))
+        choice1 = int(input("\nSQL Operataions\n1.Able to connect to MYSQL \n2.Create script of table Fitbit \n3.Create a table fitbit in MYSQL\n4. Do a bulk load fitbit dataset in MYSQL\n\nEnter Your Choice :"))
         if choice1   == 1:
             connect_db()
         elif choice1 == 2:

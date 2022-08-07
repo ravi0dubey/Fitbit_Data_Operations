@@ -18,7 +18,7 @@ import Pandas_Operations as po
 
 fitbit_flag_operations = True
 while fitbit_flag_operations:
-    choice = int(input("\n1.My SQL \n2.Pandas\n3\n"))
+    choice = int(input("\n1.My SQL \n2.Pandas\n\nEnter Your Choice: "))
     if choice == 1:
         SQL_Connection.mysql_db_operations()
     if choice == 2:
